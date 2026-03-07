@@ -6,11 +6,11 @@ import jakarta.persistence.*;
 public class Fruit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id = 0L;
-    @Column
-    private String name = "";
-    @Column
-    private int weightKilos = 0;
+    private Long id;
+    private String name;
+    private int weightKilos;
+
+    protected Fruit() {}
 
     public Fruit(Long id, String name, int weightKilos) {
         this.id = id;
@@ -28,18 +28,6 @@ public class Fruit {
 
     public int getWeightKilos() {
         return weightKilos;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setWeightKilos(int weightKilos) {
-        this.weightKilos = weightKilos;
     }
 
     @Override
