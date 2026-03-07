@@ -33,9 +33,9 @@ public class Fruit {
     @Override
     public String toString() {
         return "Fruit{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", weightKilos=" + weightKilos +
-                '}';
+                "id=" + id + "\n" +
+                "name=" + name + "\n" +
+                "weightKilos=" + weightKilos +
+                "\n}";
     }
 }
