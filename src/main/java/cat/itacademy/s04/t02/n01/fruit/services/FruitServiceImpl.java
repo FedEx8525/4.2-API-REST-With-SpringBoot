@@ -1,4 +1,8 @@
 package cat.itacademy.s04.t02.n01.fruit.services;
 
-public class FruitServiceImpl {
+public class FruitServiceImpl implements FruitService {
+    @Override
+    public void save() {
+
+    }
 }
