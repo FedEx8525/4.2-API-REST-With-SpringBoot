@@ -12,8 +12,7 @@ public class Fruit {
 
     protected Fruit() {}
 
-    public Fruit(Long id, String name, int weightKilos) {
-        this.id = id;
+    public Fruit(String name, int weightKilos) {
         this.name = name;
         this.weightKilos = weightKilos;
     }
