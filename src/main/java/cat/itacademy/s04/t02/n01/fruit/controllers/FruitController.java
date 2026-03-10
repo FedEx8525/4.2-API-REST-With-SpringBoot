@@ -2,6 +2,7 @@ package cat.itacademy.s04.t02.n01.fruit.controllers;
 
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitUpdateDTO;
 import cat.itacademy.s04.t02.n01.fruit.services.FruitService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,12 @@ public class FruitController {
     public ResponseEntity<FruitResponseDTO> getFruitById(@PathVariable Long id) {
         FruitResponseDTO fruit = fruitService.getFruitById(id);
         return new ResponseEntity<>(fruit, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FruitResponseDTO> updateFruit(@PathVariable Long id, @RequestBody FruitUpdateDTO fruitUpdateDTO) {
+        FruitResponseDTO updated = fruitService.updateFruit(fruitUpdateDTO);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
 }
