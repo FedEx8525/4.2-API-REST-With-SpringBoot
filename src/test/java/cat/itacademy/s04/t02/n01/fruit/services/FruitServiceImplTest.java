@@ -10,10 +10,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class FruitServiceImplTest {
@@ -39,5 +42,18 @@ public class FruitServiceImplTest {
         assertEquals(1L, result.id());
         assertEquals("Apple", result.name());
         assertEquals(10, result.weightInKilos());
+    }
+
+    @Test
+    void listUsers_shouldReturnAll_whenNameIsNull() {
+        Fruit savedEntity = new Fruit("Apple", 10);
+        savedEntity.setId(1L);
+
+        when(fruitRepository.findAll()).thenReturn(List.of(savedEntity));
+
+        fruitService.listFruits(null);
+
+        verify(fruitRepository, times(1)).findAll();
+        verify(fruitRepository, never()).searchByName(anyString());
     }
 }
