@@ -1,5 +1,6 @@
 package cat.itacademy.s04.t02.n01.fruit.services;
 
+import cat.itacademy.s04.t02.n01.fruit.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
@@ -25,8 +26,8 @@ public class FruitServiceImpl implements FruitService {
     public FruitResponseDTO createFruit(FruitRequestDTO fruitRequestDTO) {
         Fruit fruit = mapToEntity(fruitRequestDTO);
         Fruit savedFruit = fruitRepository.save(fruit);
-        FruitResponseDTO output = mapToDTO(savedFruit);
-        return output;
+        FruitResponseDTO response = mapToDTO(savedFruit);
+        return response;
 
     }
 
@@ -39,4 +40,14 @@ public class FruitServiceImpl implements FruitService {
         }
         return dtos;
     }
+
+    @Override
+    public FruitResponseDTO getFruitById(Long id) {
+        Fruit fruit = fruitRepository.findById(id)
+                .orElseThrow(() -> new FruitNotFoundException("fruit not found with id: " + id));
+        FruitResponseDTO response = mapToDTO(fruit);
+        return response;
+    }
+
+
 }
