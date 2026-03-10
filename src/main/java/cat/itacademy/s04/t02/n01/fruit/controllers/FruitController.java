@@ -23,16 +23,20 @@ public class FruitController {
 
     @PostMapping
     public ResponseEntity<FruitResponseDTO> createFruit(@Valid @RequestBody FruitRequestDTO fruitRequestDTO) {
-
         FruitResponseDTO savedFruit = fruitService.createFruit(fruitRequestDTO);
-
         return new ResponseEntity<>(savedFruit, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<FruitResponseDTO>> getFruits(){
+    public ResponseEntity<List<FruitResponseDTO>> getFruits() {
         List<FruitResponseDTO> fruits = fruitService.listFruits();
         return new ResponseEntity<>(fruits, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FruitResponseDTO> getFruitById(@PathVariable Long id) {
+        FruitResponseDTO fruit = fruitService.getFruitById(id);
+        return new ResponseEntity<>(fruit, HttpStatus.OK);
     }
 
 }
