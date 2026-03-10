@@ -31,10 +31,7 @@ public class FruitServiceImpl implements FruitService {
     }
 
     @Override
-    public List<FruitResponseDTO> listFruits(String name) {
-        if (name != null && !name.isEmpty()) {
-            //return fruitRepository.searchByName(name);
-        }
+    public List<FruitResponseDTO> listFruits() {
         List<Fruit> fruits = fruitRepository.findAll();
         List<FruitResponseDTO> dtos = new ArrayList<FruitResponseDTO>();
         for(Fruit f : fruits) {

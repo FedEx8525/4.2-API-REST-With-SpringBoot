@@ -30,8 +30,8 @@ public class FruitController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FruitResponseDTO>> getFruits(String name){
-        List<FruitResponseDTO> fruits = fruitService.listFruits(name);
+    public ResponseEntity<List<FruitResponseDTO>> getFruits(){
+        List<FruitResponseDTO> fruits = fruitService.listFruits();
         return new ResponseEntity<>(fruits, HttpStatus.OK);
     }
 
