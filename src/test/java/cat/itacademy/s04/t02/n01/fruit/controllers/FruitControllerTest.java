@@ -1,5 +1,6 @@
 package cat.itacademy.s04.t02.n01.fruit.controllers;
 
+import cat.itacademy.s04.t02.n01.fruit.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
 import cat.itacademy.s04.t02.n01.fruit.services.FruitService;
@@ -79,6 +80,33 @@ public class FruitControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(0));
+    }
+
+    @Test
+    void getFruitById_ShouldReturn200WhenIdExists() throws Exception {
+        FruitResponseDTO response = new FruitResponseDTO(1L,"Apple", 10);
+
+        when(fruitService.getFruitById(1L)).thenReturn(response);
+
+        mockMvc.perform(get("/fruits/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.name").value("Apple"))
+                .andExpect(jsonPath("$.weightInKilos").value(10));
+
+    }
+
+    @Test
+    void getFruitById_ShouldReturn404WhenIdDoesNotExist() throws Exception {
+
+        when(fruitService.getFruitById(99L))
+                .thenThrow(new FruitNotFoundException("fruit not found with id: 99"));
+
+        mockMvc.perform(get("/fruit/99")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
     }
 
 }
