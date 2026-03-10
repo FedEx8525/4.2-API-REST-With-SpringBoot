@@ -1,8 +1,10 @@
 package cat.itacademy.s04.t02.n01.fruit.services;
 
+import cat.itacademy.s04.t02.n01.fruit.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitUpdateDTO;
 import cat.itacademy.s04.t02.n01.fruit.repository.FruitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -85,18 +86,33 @@ public class FruitServiceImplTest {
 
     @Test
     void updateFruit_ShouldReturnUpdatedFruitResponseDTO_WhenIdExists() {
-        FruitRequestDTO request = new FruitRequestDTO("Mango", 50);
+        Long id = 1L;
+        FruitUpdateDTO request = new FruitUpdateDTO(id, "Mango", 50);
 
-        when(fruitRepository.findById(1L)).thenReturn(Optional.of(fruit1));
+        fruit1.setName("Mango");
+        fruit1.setWeightInKilos(50);
+
+        when(fruitRepository.findById(id)).thenReturn(Optional.of(fruit1));
         when(fruitRepository.save(any(Fruit.class))).thenReturn(fruit1);
 
-        FruitResponseDTO result = fruitService.updateFruit(1L, request);
+        FruitResponseDTO result = fruitService.updateFruit(request);
 
         assertNotNull(result);
-        assertEquals(1L, result.id());
+        assertEquals(id, result.id());
         assertEquals("Mango", result.name());
         assertEquals(50, result.weightInKilos());
-        verify(fruitRepository, times(1)).findById(1L);
+        verify(fruitRepository, times(1)).findById(id);
         verify(fruitRepository, times(1)).save(any(Fruit.class));
+    }
+
+    @Test
+    void updateFruit_ShouldThrowException_WhenIdDoesNotExist() {
+        Long id = 99L;
+        FruitUpdateDTO request = new FruitUpdateDTO(id, "Mango", 50);
+
+        when(fruitRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(FruitNotFoundException.class, () -> fruitService.updateFruit(request));
+        verify(fruitRepository, never()).save(any(Fruit.class));
     }
 }
