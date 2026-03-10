@@ -8,14 +8,13 @@ public class Fruit {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private int weightKilos;
+    private int weightInKilos;
 
     protected Fruit() {}
 
-    public Fruit(Long id, String name, int weightKilos) {
-        this.id = id;
+    public Fruit(String name, int weightKilos) {
         this.name = name;
-        this.weightKilos = weightKilos;
+        this.weightInKilos = weightKilos;
     }
 
     public Long getId() {
@@ -26,8 +25,20 @@ public class Fruit {
         return name;
     }
 
-    public int getWeightKilos() {
-        return weightKilos;
+    public int getWeightInKilos() {
+        return weightInKilos;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWeightInKilos(int weightInKilos) {
+        this.weightInKilos = weightInKilos;
     }
 
     @Override
@@ -35,7 +46,7 @@ public class Fruit {
         return "Fruit{" +
                 "id=" + id + "\n" +
                 "name=" + name + "\n" +
-                "weightKilos=" + weightKilos +
+                "weightKilos=" + weightInKilos +
                 "\n}";
     }
 }
