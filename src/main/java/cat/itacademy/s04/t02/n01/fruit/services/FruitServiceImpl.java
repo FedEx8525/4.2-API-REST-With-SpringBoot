@@ -5,7 +5,9 @@ import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitCreateDTO;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitDTO;
 import cat.itacademy.s04.t02.n01.fruit.repository.FruitRepository;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FruitServiceImpl implements FruitService {
 
     private final FruitRepository fruitRepository;
