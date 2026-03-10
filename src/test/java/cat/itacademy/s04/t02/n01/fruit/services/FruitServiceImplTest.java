@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -71,6 +72,14 @@ public class FruitServiceImplTest {
 
     @Test
     void getFruitById_shouldReturnFruitResponseDTO_whenIdExists() {
+        when(fruitRepository.findById(1L)).thenReturn(Optional.of(fruit1));
+
+        FruitResponseDTO result = fruitService.getFruitById(1L);
+
+        assertNotNull(result);
+        assertEquals(1L, result.id());
+        assertEquals("Apple", result.name());
+        verify(fruitRepository, times(1)).findById(1L);
 
     }
 }
