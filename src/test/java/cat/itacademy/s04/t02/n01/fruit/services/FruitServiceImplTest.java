@@ -4,6 +4,7 @@ import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
 import cat.itacademy.s04.t02.n01.fruit.repository.FruitRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,16 +29,24 @@ public class FruitServiceImplTest {
     @InjectMocks
     FruitServiceImpl fruitService;
 
+    private Fruit fruit1;
+    private Fruit fruit2;
+
+    @BeforeEach
+    void setup() {
+        fruit1 = new Fruit("Apple", 10);
+        fruit1.setId(1L);
+        fruit2 = new Fruit("Banana", 20);
+        fruit2.setId(2L);
+    }
+
     @Test
     void createFruit_ShouldReturnSavedFruitDTO() {
-        FruitRequestDTO input = new FruitRequestDTO("Apple", 10);
+        FruitRequestDTO request = new FruitRequestDTO("Apple", 10);
 
-        Fruit savedEntity = new Fruit("Apple", 10);
-        savedEntity.setId(1L);
+        when(fruitRepository.save(any(Fruit.class))).thenReturn(fruit1);
 
-        when(fruitRepository.save(any(Fruit.class))).thenReturn(savedEntity);
-
-        FruitResponseDTO result = fruitService.createFruit(input);
+        FruitResponseDTO result = fruitService.createFruit(request);
 
         assertNotNull(result);
         assertEquals(1L, result.id());
@@ -48,11 +57,6 @@ public class FruitServiceImplTest {
 
     @Test
     void listUsers_shouldReturnAll_whenNameIsNull() {
-        Fruit fruit1 = new Fruit("Apple", 10);
-        fruit1.setId(1L);
-        Fruit fruit2 = new Fruit("Banana", 20);
-        fruit1.setId(2L);
-
 
         List<Fruit> fruits = Arrays.asList(fruit1, fruit2);
 
@@ -63,5 +67,10 @@ public class FruitServiceImplTest {
         assertEquals(2, result.size());
         assertEquals("Apple", result.get(0).name());
         verify(fruitRepository, times(1)).findAll();
+    }
+
+    @Test
+    void getFruitById_shouldReturnFruitResponseDTO_whenIdExists() {
+
     }
 }
