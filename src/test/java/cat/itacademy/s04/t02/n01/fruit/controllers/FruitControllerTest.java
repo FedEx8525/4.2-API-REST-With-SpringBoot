@@ -1,7 +1,7 @@
 package cat.itacademy.s04.t02.n01.fruit.controllers;
 
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitCreateDTO;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
 import cat.itacademy.s04.t02.n01.fruit.services.FruitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -29,11 +29,11 @@ public class FruitControllerTest {
 
     @Test
     void createFruit_ShouldReturn201Created() throws Exception {
-        FruitCreateDTO input = new FruitCreateDTO("orange", 50);
+        FruitRequestDTO input = new FruitRequestDTO("orange", 50);
 
-        FruitDTO output = new FruitDTO(1L, "orange", 50);
+        FruitResponseDTO output = new FruitResponseDTO(1L, "orange", 50);
 
-        when(fruitService.createFruit(any(FruitCreateDTO.class))).thenReturn(output);
+        when(fruitService.createFruit(any(FruitRequestDTO.class))).thenReturn(output);
 
         mockMvc.perform(post("/fruits")
                         .contentType(MediaType.APPLICATION_JSON)
