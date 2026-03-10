@@ -1,11 +1,13 @@
 package cat.itacademy.s04.t02.n01.fruit.services;
 
 import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitCreateDTO;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
 import cat.itacademy.s04.t02.n01.fruit.repository.FruitRepository;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class FruitServiceImpl implements FruitService {
@@ -17,22 +19,30 @@ public class FruitServiceImpl implements FruitService {
     }
 
     @Override
-    public FruitDTO createFruit(FruitCreateDTO fruitCreateDTO) {
-        Fruit fruit = mapToEntity(fruitCreateDTO);
+    public FruitResponseDTO createFruit(FruitRequestDTO fruitRequestDTO) {
+        Fruit fruit = mapToEntity(fruitRequestDTO);
         Fruit savedFruit = fruitRepository.save(fruit);
-        FruitDTO output = mapToDTO(savedFruit);
+        FruitResponseDTO output = mapToDTO(savedFruit);
         return output;
 
     }
 
-
-    private static FruitDTO mapToDTO(Fruit fruit) {
-        FruitDTO fruitDTO = new FruitDTO(fruit.getId(), fruit.getName(), fruit.getWeightInKilos());
-        return fruitDTO;
+    @Override
+    public List<FruitResponseDTO> listFruits(String name) {
+        if (name != null && !name.isEmpty()) {
+            return fruitRepository.searchByName(name);
+        }
+        return fruitRepository.findAll();
     }
 
-    private static Fruit mapToEntity(@NotNull FruitCreateDTO fruitCreateDTO) {
-        Fruit fruit = new Fruit(fruitCreateDTO.name(), fruitCreateDTO.weightInKilos());
+
+    private static FruitResponseDTO mapToDTO(Fruit fruit) {
+        FruitResponseDTO fruitResponseDTO = new FruitResponseDTO(fruit.getId(), fruit.getName(), fruit.getWeightInKilos());
+        return fruitResponseDTO;
+    }
+
+    private static Fruit mapToEntity(@NotNull FruitRequestDTO fruitRequestDTO) {
+        Fruit fruit = new Fruit(fruitRequestDTO.name(), fruitRequestDTO.weightInKilos());
         return fruit;
     }
 }
