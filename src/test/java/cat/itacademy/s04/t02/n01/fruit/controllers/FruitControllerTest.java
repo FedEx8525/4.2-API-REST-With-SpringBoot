@@ -10,6 +10,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -54,5 +57,23 @@ public class FruitControllerTest {
                         .content(objectMapper.writeValueAsString(invalidInput)))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    void listFruits_ShouldReturn201WithList() throws Exception {
+        List<FruitResponseDTO> fruits = List.of(new FruitResponseDTO(1L, "apple", 10),new FruitResponseDTO(2L, "banana", 20));
+        when(fruitService.listFruits(null)).thenReturn(fruits);
+        mockMvc.perform(get("/fruits").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].name").value("apple"))
+                .andExpect(jsonPath("$[1].name").value("banana"));}
+
+
+    @Test
+    void listFruits_ShouldReturnEmptyListWhenNoFruitsExist() throws Exception {
+        when(fruitService.listFruits(null)).thenReturn(List.of());
+        mockMvc.perform(get("/fruits")).andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$.length()").value(0));}
 
 }
