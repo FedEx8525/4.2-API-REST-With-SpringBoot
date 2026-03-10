@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,18 +43,25 @@ public class FruitServiceImplTest {
         assertEquals(1L, result.id());
         assertEquals("Apple", result.name());
         assertEquals(10, result.weightInKilos());
+        verify(fruitRepository, times(1)).save(any(Fruit.class));
     }
 
     @Test
     void listUsers_shouldReturnAll_whenNameIsNull() {
-        Fruit savedEntity = new Fruit("Apple", 10);
-        savedEntity.setId(1L);
+        Fruit fruit1 = new Fruit("Apple", 10);
+        fruit1.setId(1L);
+        Fruit fruit2 = new Fruit("Banana", 20);
+        fruit1.setId(2L);
 
-        when(fruitRepository.findAll()).thenReturn(List.of(savedEntity));
 
-        fruitService.listFruits(null);
+        List<Fruit> fruits = Arrays.asList(fruit1, fruit2);
 
+        when(fruitRepository.findAll()).thenReturn(fruits);
+
+        List<FruitResponseDTO> result = fruitService.listFruits();
+
+        assertEquals(2, result.size());
+        assertEquals("Apple", result.get(0).name());
         verify(fruitRepository, times(1)).findAll();
-        verify(fruitRepository, never()).searchByName(anyString());
     }
 }
