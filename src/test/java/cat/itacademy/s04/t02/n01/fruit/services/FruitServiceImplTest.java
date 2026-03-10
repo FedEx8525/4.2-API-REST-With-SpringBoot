@@ -115,4 +115,30 @@ public class FruitServiceImplTest {
         assertThrows(FruitNotFoundException.class, () -> fruitService.updateFruit(request));
         verify(fruitRepository, never()).save(any(Fruit.class));
     }
+
+    @Test
+    void deleteFruit_ShouldDelete_WhenIdExists() {
+        Long id = 1L;
+
+        when(fruitRepository.existsById(id)).thenReturn(true);
+        doNothing().when(fruitRepository).deleteById(id);
+
+        fruitService.deleteFruit(id);
+
+        verify(fruitRepository, times(1)).existsById(id);
+        verify(fruitRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    void deleteFruit_ShouldThrowException_WhenIdDoesNotExist() {
+        Long id = 99L;
+
+        when(fruitRepository.existsById(id)).thenReturn(false);
+
+        assertThrows(FruitNotFoundException.class, () -> fruitService.deleteFruit(id));
+
+        verify(fruitRepository, never()).deleteById(anyLong());
+    }
+
+
 }
