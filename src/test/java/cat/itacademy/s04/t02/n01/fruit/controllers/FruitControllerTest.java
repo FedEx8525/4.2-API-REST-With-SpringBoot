@@ -60,21 +60,25 @@ public class FruitControllerTest {
     }
 
     @Test
-    void listFruits_ShouldReturn201WithList() throws Exception {
-        List<FruitResponseDTO> fruits = List.of(new FruitResponseDTO(1L, "apple", 10),new FruitResponseDTO(2L, "banana", 20));
+    void listFruits_ShouldReturn200WithList() throws Exception {
+        List<FruitResponseDTO> fruits = List.of(new FruitResponseDTO(1L, "apple", 10), new FruitResponseDTO(2L, "banana", 20));
         when(fruitService.listFruits()).thenReturn(fruits);
         mockMvc.perform(get("/fruits").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(jsonPath("$").isArray())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].name").value("apple"))
-                .andExpect(jsonPath("$[1].name").value("banana"));}
+                .andExpect(jsonPath("$[1].name").value("banana"));
+    }
 
 
     @Test
     void listFruits_ShouldReturnEmptyListWhenNoFruitsExist() throws Exception {
         when(fruitService.listFruits()).thenReturn(List.of());
-        mockMvc.perform(get("/fruits")).andExpect(status().isOk())
+        mockMvc.perform(get("/fruits"))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$.length()").value(0));}
+                .andExpect(jsonPath("$.length()").value(0));
+    }
 
 }
