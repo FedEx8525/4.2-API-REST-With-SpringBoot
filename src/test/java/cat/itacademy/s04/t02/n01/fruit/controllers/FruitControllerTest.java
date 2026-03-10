@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -135,6 +135,28 @@ public class FruitControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteFruit_Returns204_WhenExists() throws Exception{
+
+        doNothing().when(fruitService).deleteFruit(1L);
+
+        mockMvc.perform(delete("/fruits/1"))
+                .andExpect(status().isNoContent());
+
+        verify(fruitService, times(1)).deleteFruit(1L);
+    }
+
+    @Test
+    void deleteFruit_Returns404_WhenNotFound() throws Exception{
+
+        doThrow(new FruitNotFoundException("99")).when(fruitService).deleteFruit(99L);
+
+        mockMvc.perform(delete("/fruits/99"))
+                .andExpect(status().isNotFound());
+
+        verify(fruitService, times(1)).deleteFruit(99L);
     }
 
 }

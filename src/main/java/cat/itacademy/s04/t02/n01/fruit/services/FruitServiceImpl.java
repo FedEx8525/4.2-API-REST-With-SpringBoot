@@ -63,5 +63,13 @@ public class FruitServiceImpl implements FruitService {
         return response;
     }
 
+    @Override
+    public void deleteFruit(Long id) {
+        if (!fruitRepository.existsById(id)) {
+            throw new FruitNotFoundException(id.toString());
+        }
+        fruitRepository.deleteById(id);
+    }
+
 
 }
