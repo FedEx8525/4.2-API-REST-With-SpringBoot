@@ -1,15 +1,15 @@
 package cat.itacademy.s04.t02.n01.fruit.controllers;
 
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitCreateDTO;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
 import cat.itacademy.s04.t02.n01.fruit.services.FruitService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/fruits")
@@ -22,11 +22,21 @@ public class FruitController {
     }
 
     @PostMapping
-    public ResponseEntity<FruitDTO> createFruit(@Validated @RequestBody FruitCreateDTO fruitCreateDTO) {
-
-        FruitDTO savedFruit = fruitService.createFruit(fruitCreateDTO);
-
+    public ResponseEntity<FruitResponseDTO> createFruit(@Valid @RequestBody FruitRequestDTO fruitRequestDTO) {
+        FruitResponseDTO savedFruit = fruitService.createFruit(fruitRequestDTO);
         return new ResponseEntity<>(savedFruit, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FruitResponseDTO>> getFruits() {
+        List<FruitResponseDTO> fruits = fruitService.listFruits();
+        return new ResponseEntity<>(fruits, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FruitResponseDTO> getFruitById(@PathVariable Long id) {
+        FruitResponseDTO fruit = fruitService.getFruitById(id);
+        return new ResponseEntity<>(fruit, HttpStatus.OK);
     }
 
 }
