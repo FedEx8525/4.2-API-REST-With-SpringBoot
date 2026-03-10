@@ -43,6 +43,16 @@ public class FruitControllerTest {
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name").value("orange"))
                 .andExpect(jsonPath("$.weightInKilos").value(50));
-
     }
+
+    @Test
+    void createFruit_ShouldReturn400WhenDataIsInvalid() throws Exception {
+        FruitRequestDTO invalidInput = new FruitRequestDTO("", -5);
+
+        mockMvc.perform(post("/fruits")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidInput)))
+                .andExpect(status().isBadRequest());
+    }
+
 }
