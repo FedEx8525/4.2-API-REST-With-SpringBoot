@@ -4,6 +4,7 @@ import cat.itacademy.s04.t02.n01.fruit.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitUpdateDTO;
 import cat.itacademy.s04.t02.n01.fruit.repository.FruitRepository;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +45,21 @@ public class FruitServiceImpl implements FruitService {
     @Override
     public FruitResponseDTO getFruitById(Long id) {
         Fruit fruit = fruitRepository.findById(id)
-                .orElseThrow(() -> new FruitNotFoundException("fruit not found with id: " + id));
+                .orElseThrow(() -> new FruitNotFoundException(id.toString()));
         FruitResponseDTO response = mapToDTO(fruit);
+        return response;
+    }
+
+    @Override
+    public FruitResponseDTO updateFruit(FruitUpdateDTO fruitUpdateDTO) {
+        Fruit fruit = fruitRepository.findById(fruitUpdateDTO.id())
+                .orElseThrow(() -> new FruitNotFoundException(fruitUpdateDTO.id().toString()));
+
+        fruit.setName(fruitUpdateDTO.name());
+        fruit.setWeightInKilos(fruitUpdateDTO.weightInKilos());
+
+        Fruit updatedFruit = fruitRepository.save(fruit);
+        FruitResponseDTO response = mapToDTO(updatedFruit);
         return response;
     }
 
