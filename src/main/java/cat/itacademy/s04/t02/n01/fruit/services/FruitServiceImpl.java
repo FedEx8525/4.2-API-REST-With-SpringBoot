@@ -4,10 +4,13 @@ import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
 import cat.itacademy.s04.t02.n01.fruit.repository.FruitRepository;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static cat.itacademy.s04.t02.n01.fruit.mapper.FruitMapper.mapToDTO;
+import static cat.itacademy.s04.t02.n01.fruit.mapper.FruitMapper.mapToEntity;
 
 @Service
 public class FruitServiceImpl implements FruitService {
@@ -30,19 +33,13 @@ public class FruitServiceImpl implements FruitService {
     @Override
     public List<FruitResponseDTO> listFruits(String name) {
         if (name != null && !name.isEmpty()) {
-            return fruitRepository.searchByName(name);
+            //return fruitRepository.searchByName(name);
         }
-        return fruitRepository.findAll();
-    }
-
-
-    private static FruitResponseDTO mapToDTO(Fruit fruit) {
-        FruitResponseDTO fruitResponseDTO = new FruitResponseDTO(fruit.getId(), fruit.getName(), fruit.getWeightInKilos());
-        return fruitResponseDTO;
-    }
-
-    private static Fruit mapToEntity(@NotNull FruitRequestDTO fruitRequestDTO) {
-        Fruit fruit = new Fruit(fruitRequestDTO.name(), fruitRequestDTO.weightInKilos());
-        return fruit;
+        List<Fruit> fruits = fruitRepository.findAll();
+        List<FruitResponseDTO> dtos = new ArrayList<FruitResponseDTO>();
+        for(Fruit f : fruits) {
+            dtos.add(mapToDTO(f));
+        }
+        return dtos;
     }
 }
