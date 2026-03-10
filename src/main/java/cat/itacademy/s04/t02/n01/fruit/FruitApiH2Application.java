@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class FruitApiH2Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FruitApiH2Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FruitApiH2Application.class, args);
+    }
 
-    @Bean
+    /*@Bean
     public CommandLineRunner demo(FruitRepository repository) {
 
         return(args) -> {
@@ -26,6 +26,6 @@ public class FruitApiH2Application {
             repository.save(new Fruit("banana", 75));
 
         };
-    }
+    } */
 
 }
