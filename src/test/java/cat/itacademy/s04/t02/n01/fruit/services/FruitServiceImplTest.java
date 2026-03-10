@@ -42,7 +42,7 @@ public class FruitServiceImplTest {
     }
 
     @Test
-    void createFruit_ShouldReturnSavedFruitDTO() {
+    void createFruit_ShouldReturnFruitResponseDTO_WhenFruitIsSave() {
         FruitRequestDTO request = new FruitRequestDTO("Apple", 10);
 
         when(fruitRepository.save(any(Fruit.class))).thenReturn(fruit1);
@@ -57,7 +57,7 @@ public class FruitServiceImplTest {
     }
 
     @Test
-    void listUsers_shouldReturnAll_whenNameIsNull() {
+    void listUsers_ShouldReturnAll_WhenNameIsNull() {
 
         List<Fruit> fruits = Arrays.asList(fruit1, fruit2);
 
@@ -71,7 +71,7 @@ public class FruitServiceImplTest {
     }
 
     @Test
-    void getFruitById_shouldReturnFruitResponseDTO_whenIdExists() {
+    void getFruitById_ShouldReturnFruitResponseDTO_WhenIdExists() {
         when(fruitRepository.findById(1L)).thenReturn(Optional.of(fruit1));
 
         FruitResponseDTO result = fruitService.getFruitById(1L);
@@ -81,5 +81,22 @@ public class FruitServiceImplTest {
         assertEquals("Apple", result.name());
         verify(fruitRepository, times(1)).findById(1L);
 
+    }
+
+    @Test
+    void updateFruit_ShouldReturnUpdatedFruitResponseDTO_WhenIdExists() {
+        FruitRequestDTO request = new FruitRequestDTO("Mango", 50);
+
+        when(fruitRepository.findById(1L)).thenReturn(Optional.of(fruit1));
+        when(fruitRepository.save(any(Fruit.class))).thenReturn(fruit1);
+
+        FruitResponseDTO result = fruitService.updateFruit(1L, request);
+
+        assertNotNull(result);
+        assertEquals(1L, result.id());
+        assertEquals("Mango", result.name());
+        assertEquals(50, result.weightInKilos());
+        verify(fruitRepository, times(1)).findById(1L);
+        verify(fruitRepository, times(1)).save(any(Fruit.class));
     }
 }
