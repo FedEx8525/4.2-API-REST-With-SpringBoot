@@ -9,7 +9,6 @@ import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitUpdateDTO;
 import cat.itacademy.s04.t02.n01.fruit.repository.FruitRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static cat.itacademy.s04.t02.n01.fruit.mapper.FruitMapper.mapToDTO;
