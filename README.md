@@ -252,6 +252,12 @@ The project follows **TDD (Test-Driven Development)** with three levels of testi
 ```bash
 ./mvnw test
 ```
+**Test coverage includes:**
+- Happy path for all CRUD operations
+- 404 Not Found when ID does not exist
+- 400 Bad Request when input data is invalid
+- Full create → read → update → delete flow (integration)
+
 ## 🔧 Manual Testing with Postman
 
 A Postman collection is available in the `/postman` folder.
@@ -277,8 +283,4 @@ PUT   /fruits/{id}  → update and verify the change
 DELETE /fruits/{id} → delete
 GET   /fruits/{id}  → should return 404 ✅
 ```
-**Test coverage includes:**
-- Happy path for all CRUD operations
-- 404 Not Found when ID does not exist
-- 400 Bad Request when input data is invalid
-- Full create → read → update → delete flow (integration)
+
