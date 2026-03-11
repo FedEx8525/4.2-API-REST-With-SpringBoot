@@ -58,7 +58,7 @@ public class FruitServiceImplTest {
     }
 
     @Test
-    void listUsers_ShouldReturnAll_WhenNameIsNull() {
+    void listUsers_ShouldReturnAll_WhenFruitExist() {
 
         List<Fruit> fruits = Arrays.asList(fruit1, fruit2);
 
@@ -87,7 +87,7 @@ public class FruitServiceImplTest {
     @Test
     void updateFruit_ShouldReturnUpdatedFruitResponseDTO_WhenIdExists() {
         Long id = 1L;
-        FruitUpdateDTO request = new FruitUpdateDTO(id, "Mango", 50);
+        FruitUpdateDTO request = new FruitUpdateDTO( "Mango", 50);
 
         fruit1.setName("Mango");
         fruit1.setWeightInKilos(50);
@@ -95,7 +95,7 @@ public class FruitServiceImplTest {
         when(fruitRepository.findById(id)).thenReturn(Optional.of(fruit1));
         when(fruitRepository.save(any(Fruit.class))).thenReturn(fruit1);
 
-        FruitResponseDTO result = fruitService.updateFruit(request);
+        FruitResponseDTO result = fruitService.updateFruit(id, request);
 
         assertNotNull(result);
         assertEquals(id, result.id());
@@ -108,11 +108,11 @@ public class FruitServiceImplTest {
     @Test
     void updateFruit_ShouldThrowException_WhenIdDoesNotExist() {
         Long id = 99L;
-        FruitUpdateDTO request = new FruitUpdateDTO(id, "Mango", 50);
+        FruitUpdateDTO request = new FruitUpdateDTO("Mango", 50);
 
         when(fruitRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(FruitNotFoundException.class, () -> fruitService.updateFruit(request));
+        assertThrows(FruitNotFoundException.class, () -> fruitService.updateFruit(id, request));
         verify(fruitRepository, never()).save(any(Fruit.class));
     }
 
