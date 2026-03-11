@@ -58,7 +58,7 @@ public class FruitServiceImplTest {
     }
 
     @Test
-    void listUsers_ShouldReturnAll_WhenFruitExist() {
+    void listUsers_ShouldReturnAll_WhenFruitsExist() {
 
         List<Fruit> fruits = Arrays.asList(fruit1, fruit2);
 
