@@ -1,6 +1,7 @@
 package cat.itacademy.s04.t02.n01.fruit.services;
 
 import cat.itacademy.s04.t02.n01.fruit.exception.FruitNotFoundException;
+import cat.itacademy.s04.t02.n01.fruit.mapper.FruitMapper;
 import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
 import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
@@ -35,11 +36,9 @@ public class FruitServiceImpl implements FruitService {
     @Override
     public List<FruitResponseDTO> listFruits() {
         List<Fruit> fruits = fruitRepository.findAll();
-        List<FruitResponseDTO> dtos = new ArrayList<FruitResponseDTO>();
-        for(Fruit f : fruits) {
-            dtos.add(mapToDTO(f));
-        }
-        return dtos;
+        return fruitRepository.findAll().stream()
+                .map(FruitMapper::mapToDTO)
+                .toList();
     }
 
     @Override
