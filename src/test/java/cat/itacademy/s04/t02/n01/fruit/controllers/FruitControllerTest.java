@@ -103,7 +103,7 @@ public class FruitControllerTest {
         when(fruitService.getFruitById(99L))
                 .thenThrow(new FruitNotFoundException("fruit not found with id: 99"));
 
-        mockMvc.perform(get("/fruit/99")
+        mockMvc.perform(get("/fruits/99")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
 
@@ -111,10 +111,10 @@ public class FruitControllerTest {
 
     @Test
     void updateFruit_Returns200_WhenExists() throws Exception {
-        FruitUpdateDTO request = new FruitUpdateDTO(1L, "Mango", 50);
+        FruitUpdateDTO request = new FruitUpdateDTO( "Mango", 50);
         FruitResponseDTO response = new FruitResponseDTO(1L, "Mango", 50);
 
-        when(fruitService.updateFruit(any(FruitUpdateDTO.class))).thenReturn(response);
+        when(fruitService.updateFruit(eq(1L), any(FruitUpdateDTO.class))).thenReturn(response);
 
         mockMvc.perform(put("/fruits/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -126,9 +126,9 @@ public class FruitControllerTest {
 
     @Test
     void updateFruit_Returns404_WhenNotFound() throws Exception {
-        FruitUpdateDTO request = new FruitUpdateDTO(99L, "Mango", 50);
+        FruitUpdateDTO request = new FruitUpdateDTO( "Mango", 50);
 
-        when(fruitService.updateFruit(any(FruitUpdateDTO.class)))
+        when(fruitService.updateFruit(eq(99L), any(FruitUpdateDTO.class)))
                 .thenThrow(new FruitNotFoundException("99"));
 
         mockMvc.perform(put("/fruits/99")
