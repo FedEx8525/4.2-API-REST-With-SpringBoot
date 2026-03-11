@@ -7,7 +7,6 @@ import cat.itacademy.s04.t02.n01.fruit.services.FruitService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class FruitController {
     @PutMapping("/{id}")
     public ResponseEntity<FruitResponseDTO> updateFruit(
             @PathVariable Long id,
-            @RequestBody FruitUpdateDTO fruitUpdateDTO) {
+            @Valid @RequestBody FruitUpdateDTO fruitUpdateDTO) {
         FruitResponseDTO updated = fruitService.updateFruit(id, fruitUpdateDTO);
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }
