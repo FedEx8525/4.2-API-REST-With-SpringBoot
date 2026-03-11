@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleNotFound(FruitNotFoundException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(ErrorResponseDTO.of(404, "NotFound", exception.getMessage()));
+                .body(ErrorResponseDTO.of(404, "Not Found", exception.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
