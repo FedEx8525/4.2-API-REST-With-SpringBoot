@@ -10,7 +10,7 @@ public class FruitMapper {
         return new FruitResponseDTO(fruit.getId(), fruit.getName(), fruit.getWeightInKilos());
     }
 
-    public static Fruit mapToEntity(@NotNull FruitRequestDTO dto) {
+    public static Fruit mapToEntity(FruitRequestDTO dto) {
         return new Fruit(dto.name(), dto.weightInKilos());
     }
 }
