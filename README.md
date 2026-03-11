@@ -53,8 +53,11 @@ fruit-api-h2
 │           ├── controllers            ← FruitControllerTest (MockMvc)
 │           ├── services               ← FruitServiceImplTest (Mockito)
 │           └── FruitIntegrationTest   ← Full flow tests (SpringBootTest)
+├── postman                            ← FruitAPI-H2.postman_collection.json (Postman endpoint test)
+│   
 ├── Dockerfile
-└── pom.xml
+├── pom.xml
+└── README.md
 ```
 
 ---
@@ -249,7 +252,31 @@ The project follows **TDD (Test-Driven Development)** with three levels of testi
 ```bash
 ./mvnw test
 ```
+## 🔧 Manual Testing with Postman
 
+A Postman collection is available in the `/postman` folder.
+
+**Import the collection:**
+1. Open Postman → **Import** → select `FruitAPI-H2.postman_collection.json`
+2. Activate the `Fruit API local` environment (top right dropdown)
+3. Start the application locally
+4. Run the requests
+
+**Collection structure:**
+| Folder | Requests |
+|:-------|:---------|
+| ✅ Happy Path | Create, Get All, Get By ID, Update, Delete |
+| ❌ Error Cases | 404 Not Found (x3), 400 Bad Request (x3) |
+
+**Recommended test flow:**
+```bash
+POST  /fruits       → create a fruit, note the returned id
+GET   /fruits       → verify it appears in the list
+GET   /fruits/{id}  → verify by id
+PUT   /fruits/{id}  → update and verify the change
+DELETE /fruits/{id} → delete
+GET   /fruits/{id}  → should return 404 ✅
+```
 **Test coverage includes:**
 - Happy path for all CRUD operations
 - 404 Not Found when ID does not exist
