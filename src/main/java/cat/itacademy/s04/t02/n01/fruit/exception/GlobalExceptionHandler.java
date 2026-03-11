@@ -29,6 +29,13 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponseDTO.of(400, "Bad Request" , message));
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDTO> handlerGeneric(Exception exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ErrorResponseDTO.of(500, "Internal Server Error", "An unexpected error occurred"));
+    }
+
 
 
 }
