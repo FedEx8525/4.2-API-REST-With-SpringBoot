@@ -1,0 +1,56 @@
+package cat.itacademy.s04.t02.n01.fruit.controllers;
+
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
+import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitUpdateDTO;
+import cat.itacademy.s04.t02.n01.fruit.services.FruitService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/fruits")
+public class FruitController {
+
+    private final FruitService fruitService;
+
+    public FruitController(FruitService fruitService) {
+        this.fruitService = fruitService;
+    }
+
+    @PostMapping
+    public ResponseEntity<FruitResponseDTO> createFruit(@Valid @RequestBody FruitRequestDTO fruitRequestDTO) {
+        FruitResponseDTO savedFruit = fruitService.createFruit(fruitRequestDTO);
+        return new ResponseEntity<>(savedFruit, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<FruitResponseDTO>> getFruits() {
+        List<FruitResponseDTO> fruits = fruitService.listFruits();
+        return new ResponseEntity<>(fruits, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FruitResponseDTO> getFruitById(@PathVariable Long id) {
+        FruitResponseDTO fruit = fruitService.getFruitById(id);
+        return new ResponseEntity<>(fruit, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FruitResponseDTO> updateFruit(
+            @PathVariable Long id,
+            @Valid @RequestBody FruitUpdateDTO fruitUpdateDTO) {
+        FruitResponseDTO updated = fruitService.updateFruit(id, fruitUpdateDTO);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteFruit(@PathVariable Long id) {
+        fruitService.deleteFruit(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+}
