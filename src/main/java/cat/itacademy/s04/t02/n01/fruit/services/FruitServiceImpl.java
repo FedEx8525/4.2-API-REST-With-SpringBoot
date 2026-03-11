@@ -35,7 +35,6 @@ public class FruitServiceImpl implements FruitService {
 
     @Override
     public List<FruitResponseDTO> listFruits() {
-        List<Fruit> fruits = fruitRepository.findAll();
         return fruitRepository.findAll().stream()
                 .map(FruitMapper::mapToDTO)
                 .toList();
