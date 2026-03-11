@@ -10,6 +10,6 @@ public interface FruitService {
     FruitResponseDTO createFruit(FruitRequestDTO fruitRequestDTO);
     List<FruitResponseDTO> listFruits();
     FruitResponseDTO getFruitById(Long id);
-    FruitResponseDTO updateFruit(FruitUpdateDTO fruitUpdateDTO);
+    FruitResponseDTO updateFruit(Long id, FruitUpdateDTO fruitUpdateDTO);
     void deleteFruit(Long id);
 }
