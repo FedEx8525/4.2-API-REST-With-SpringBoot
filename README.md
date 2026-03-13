@@ -53,8 +53,8 @@ fruit-api-h2
 │           ├── controllers            ← FruitControllerTest (MockMvc)
 │           ├── services               ← FruitServiceImplTest (Mockito)
 │           └── FruitIntegrationTest   ← Full flow tests (SpringBootTest)
-├── postman                            ← FruitAPI-H2.postman_collection.json (Postman endpoint test)
-│   
+├── postman
+│   └── FruitAPI-H2.postman_collection.json  ← Postman endpoint tests 
 ├── Dockerfile
 ├── pom.xml
 └── README.md

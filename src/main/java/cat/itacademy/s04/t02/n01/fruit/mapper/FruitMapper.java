@@ -1,0 +1,15 @@
+package cat.itacademy.s04.t02.n01.fruit.mapper;
+
+import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitRequestDTO;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitResponseDTO;
+
+public class FruitMapper {
+    public static FruitResponseDTO mapToDTO(Fruit fruit) {
+        return new FruitResponseDTO(fruit.getId(), fruit.getName(), fruit.getWeightInKilos());
+    }
+
+    public static Fruit mapToEntity(FruitRequestDTO dto) {
+        return new Fruit(dto.name(), dto.weightInKilos());
+    }
+}
