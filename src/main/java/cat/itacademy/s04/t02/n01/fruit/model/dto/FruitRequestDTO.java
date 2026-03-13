@@ -7,6 +7,5 @@ import jakarta.validation.constraints.Positive;
 public record FruitRequestDTO(
         @NotBlank(message = "The name cannot be empty")
         String name,
-        @NotNull(message = "The weight cannot be null")
         @Positive(message = "The weight must be greater than zero")
         int weightInKilos) {}
