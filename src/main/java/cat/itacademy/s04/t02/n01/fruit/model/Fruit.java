@@ -3,6 +3,7 @@ package cat.itacademy.s04.t02.n01.fruit.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "fruits")
 public class Fruit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
