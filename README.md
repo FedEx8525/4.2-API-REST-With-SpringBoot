@@ -283,3 +283,4 @@ PUT   /fruits/{id}  → update and verify the change
 DELETE /fruits/{id} → delete
 GET   /fruits/{id}  → should return 404 ✅
 ```
+
