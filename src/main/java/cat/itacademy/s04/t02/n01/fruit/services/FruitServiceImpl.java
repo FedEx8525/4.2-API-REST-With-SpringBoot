@@ -27,8 +27,7 @@ public class FruitServiceImpl implements FruitService {
     public FruitResponseDTO createFruit(FruitRequestDTO fruitRequestDTO) {
         Fruit fruit = mapToEntity(fruitRequestDTO);
         Fruit savedFruit = fruitRepository.save(fruit);
-        FruitResponseDTO response = mapToDTO(savedFruit);
-        return response;
+        return mapToDTO(savedFruit);
 
     }
 
@@ -43,8 +42,7 @@ public class FruitServiceImpl implements FruitService {
     public FruitResponseDTO getFruitById(Long id) {
         Fruit fruit = fruitRepository.findById(id)
                 .orElseThrow(() -> new FruitNotFoundException(id.toString()));
-        FruitResponseDTO response = mapToDTO(fruit);
-        return response;
+        return mapToDTO(fruit);
     }
 
     @Override
@@ -56,16 +54,14 @@ public class FruitServiceImpl implements FruitService {
         fruit.setWeightInKilos(fruitUpdateDTO.weightInKilos());
 
         Fruit updatedFruit = fruitRepository.save(fruit);
-        FruitResponseDTO response = mapToDTO(updatedFruit);
-        return response;
+        return mapToDTO(updatedFruit);
     }
 
     @Override
     public void deleteFruit(Long id) {
-        if (!fruitRepository.existsById(id)) {
-            throw new FruitNotFoundException(id.toString());
-        }
-        fruitRepository.deleteById(id);
+        Fruit fruit = fruitRepository.findById(id)
+                .orElseThrow(() -> new FruitNotFoundException(id.toString()));
+        fruitRepository.delete(fruit);
     }
 
 
