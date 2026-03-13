@@ -1,9 +1,9 @@
 package cat.itacademy.s04.t02.n01.fruit.controllers;
 
 import cat.itacademy.s04.t02.n01.fruit.exception.FruitNotFoundException;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitUpdateDTO;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitRequestDTO;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitResponseDTO;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitUpdateDTO;
 import cat.itacademy.s04.t02.n01.fruit.services.FruitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

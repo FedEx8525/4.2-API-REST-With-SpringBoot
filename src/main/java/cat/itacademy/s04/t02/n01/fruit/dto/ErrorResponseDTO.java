@@ -1,4 +1,4 @@
-package cat.itacademy.s04.t02.n01.fruit.exception.dto;
+package cat.itacademy.s04.t02.n01.fruit.dto;
 
 import java.time.LocalDateTime;
 

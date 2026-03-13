@@ -1,9 +1,8 @@
 package cat.itacademy.s04.t02.n01.fruit.mapper;
 
 import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
-import jakarta.validation.constraints.NotNull;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitRequestDTO;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitResponseDTO;
 
 public class FruitMapper {
     public static FruitResponseDTO mapToDTO(Fruit fruit) {

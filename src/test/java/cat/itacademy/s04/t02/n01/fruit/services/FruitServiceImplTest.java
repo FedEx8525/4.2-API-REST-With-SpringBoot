@@ -2,9 +2,9 @@ package cat.itacademy.s04.t02.n01.fruit.services;
 
 import cat.itacademy.s04.t02.n01.fruit.exception.FruitNotFoundException;
 import cat.itacademy.s04.t02.n01.fruit.model.Fruit;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitRequestDTO;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitResponseDTO;
-import cat.itacademy.s04.t02.n01.fruit.model.dto.FruitUpdateDTO;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitRequestDTO;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitResponseDTO;
+import cat.itacademy.s04.t02.n01.fruit.dto.FruitUpdateDTO;
 import cat.itacademy.s04.t02.n01.fruit.repository.FruitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

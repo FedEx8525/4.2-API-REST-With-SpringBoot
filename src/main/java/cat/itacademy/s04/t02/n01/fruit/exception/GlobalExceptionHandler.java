@@ -1,6 +1,6 @@
 package cat.itacademy.s04.t02.n01.fruit.exception;
 
-import cat.itacademy.s04.t02.n01.fruit.exception.dto.ErrorResponseDTO;
+import cat.itacademy.s04.t02.n01.fruit.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
